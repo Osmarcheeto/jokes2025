@@ -1,37 +1,49 @@
-
-
-
 # make this performance task ready for submission
 # To give the user a fun experience hearing knock knock jokes
+topics = ["robbers", "tanks", "pencils"]
 
-joke = input("Do you want to hear a joke? ")
-if joke == "no":
-    print("Okay suit yourself!")
-while joke == "yes":
-    print("Great, Let's Play")
-    question = input("Do you want to hear a joke about robbers, tanks, or pencils? ")
-    if question == "robbers":
-        input("Knock Knock ")
-        input("Calder")
-        print("Calder police - I've been robbed!")
-        joke = input("Do you want to hear another joke or are you finished? ")
-    elif question == "tanks":
-        input("Knock Knock ")
-        input("Tank ")
-        input("You are welcome! ")
-        joke = input("Do you want to hear another joke or are you finished? ")
-    elif question == "pencils":
-        input("Knock Knock ")
-        input("Broken pencil ")
-        input("Nevermind, it's pointless! ")
-        joke = input("Do you want to hear another joke or are you finished? ")
-if joke == "finished":
-    rate = int(input("Please rate our game 1-10! "))
-    final_score = int(rate * 10)
-    print(str(final_score) + " percent satisfaction rate")
-    friend = input("Would you recommend this game to a friend? ")
-
-    if friend == "yes" or friend == "maybe":
-        print("Thanks, we appreciate it. ")
+# Function to tell a joke (abstraction)
+def tell_joke(topic):
+    if topic == "robbers":
+        setup = "Calder"
+        punchline = "Calder police — I've been robbed!"
+    elif topic == "tanks":
+        setup = "Tank"
+        punchline = "You're welcome!"
     else:
-        print("Sorry you did not enjoy it. ")
+        setup = "Broken pencil"
+        punchline = "Nevermind, it's pointless!"
+
+    input("Knock knock... ")
+    input(setup + "... ")
+    print(punchline)
+
+# Function to get a valid answer
+def choose(prompt, options):
+    answer = input(prompt).lower()
+    while answer not in options:
+        answer = input(prompt).lower()
+    return answer
+
+# Start
+play = choose("Do you want to hear a joke? (yes/no) ", ["yes", "no"])
+
+if play == "yes":
+    again = "yes"
+    while again == "yes":
+        topic = choose("Pick a topic (robbers/tanks/pencils): ", topics)
+        tell_joke(topic)
+        again = choose("Another joke? (yes/finito) ", ["yes", "finito"])
+
+    rating = int(input("Rate the game 1–10: "))
+    print("Satisfaction:", rating * 10, "%")
+
+    recommend = choose("Recommend to a friend? (yes/maybe/no) ",
+                       ["yes", "maybe", "no"])
+
+    if recommend in ["yes", "maybe"]:
+        print("Thank you!")
+    else:
+        print("Sorry you didn’t like it.")
+else:
+    print("Okay, maybe next time!")
