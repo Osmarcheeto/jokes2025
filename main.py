@@ -1,49 +1,55 @@
-# make this performance task ready for submission
-# To give the user a fun experience hearing knock knock jokes
-topics = ["robbers", "tanks", "pencils"]
+jokes = [ "Calder police - I've been robbed!", "You are welcome!", "Nevermind, it's pointless!" ]
 
-# Function to tell a joke (abstraction)
-def tell_joke(topic):
-    if topic == "robbers":
-        setup = "Calder"
-        punchline = "Calder police — I've been robbed!"
-    elif topic == "tanks":
-        setup = "Tank"
-        punchline = "You're welcome!"
-    else:
-        setup = "Broken pencil"
-        punchline = "Nevermind, it's pointless!"
+available_jokes = ["robbers", "tanks", "pencils"]
 
-    input("Knock knock... ")
-    input(setup + "... ")
-    print(punchline)
+def tell_joke(category):
+    setup = ["Knock Knock? "]
+    for line in setup:
+        input(line)
+        if category == "robbers":
+            input("Calder... ")
+            print(jokes[0])
+            if "robbers" in available_jokes:
+                available_jokes.remove("robbers")
+        elif category == "tanks":
+            input("Tank... ")
+            print(jokes[1])
+            if "tanks" in available_jokes:
+                available_jokes.remove("tanks")
+        else:
+            input("Broken pencil... ")
+            print(jokes[2])
+            if "pencils" in available_jokes:
+                available_jokes.remove("pencils")
 
-# Function to get a valid answer
-def choose(prompt, options):
-    answer = input(prompt).lower()
-    while answer not in options:
-        answer = input(prompt).lower()
-    return answer
+def get_feedback(user_response):
+    if user_response == "finished":
+        rating = int(input("Rate our game 1-10: "))
+        print(f"You gave us {rating * 10}% satisfaction!")
+        recommend = input("Recommend to a friend? (yes/no) ")
+        if recommend == "yes":
+            print("Thanks!")
+        else:
+            print("Oh! sorry to hear that.")
 
-# Start
-play = choose("Do you want to hear a joke? (yes/no) ", ["yes", "no"])
+print("Welcome to the Knock-Knock Joke Game!")
+want_joke = input("Do you want to hear a joke? (yes/no) ")
 
-if play == "yes":
-    again = "yes"
-    while again == "yes":
-        topic = choose("Pick a topic (robbers/tanks/pencils): ", topics)
-        tell_joke(topic)
-        again = choose("Another joke? (yes/finito) ", ["yes", "finito"])
-
-    rating = int(input("Rate the game 1–10: "))
-    print("Satisfaction:", rating * 10, "%")
-
-    recommend = choose("Recommend to a friend? (yes/maybe/no) ",
-                       ["yes", "maybe", "no"])
-
-    if recommend in ["yes", "maybe"]:
-        print("Thank you!")
-    else:
-        print("Sorry you didn’t like it.")
+if want_joke == "no":
+    print("Okay, suit yourself!")
 else:
-    print("Okay, maybe next time!")
+    while want_joke == "yes":
+        if len(available_jokes) > 0:
+            print(f"Available jokes: {', '.join(available_jokes)}")
+            choice = input("Choose a joke: ")
+            if choice not in available_jokes:
+                print("That joke isn't available.")
+            else:
+                tell_joke(choice)
+            want_joke = input("Another joke? (yes/finished) ")
+        else:
+            print("You've heard all the jokes!")
+            want_joke = "finished"
+
+    get_feedback(want_joke)
+    
