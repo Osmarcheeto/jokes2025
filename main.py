@@ -1,3 +1,4 @@
+# BRANDON AND OSMAR WORKED ON IT
 jokes = [ "Calder police - I've been robbed!", "You are welcome!", "Nevermind, it's pointless!" ]
 
 available_jokes = ["robbers", "tanks", "pencils"]
